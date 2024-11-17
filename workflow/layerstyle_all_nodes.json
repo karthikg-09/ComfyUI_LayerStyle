@@ -4028,6 +4028,11 @@
           "name": "images",
           "type": "IMAGE",
           "link": null
+        },
+        {
+          "name": "caption",
+          "type": "STRING",
+          "link": null
         }
       ],
       "properties": {
@@ -4063,6 +4068,11 @@
         {
           "name": "images",
           "type": "IMAGE",
+          "link": null
+        },
+        {
+          "name": "caption",
+          "type": "STRING",
           "link": null
         }
       ],

@@ -26,6 +26,7 @@ class SaveImagePlus:
                      "blind_watermark": ("STRING", {"default": ""}),
                      "save_workflow_as_json": ("BOOLEAN", {"default": False}),
                      "preview": ("BOOLEAN", {"default": True}),
+                     "caption": ("STRING", {"default": ""}),  # Added caption input
                      },
                 "hidden": {"prompt": "PROMPT", "extra_pnginfo": "EXTRA_PNGINFO"},
                 }
@@ -37,7 +38,7 @@ class SaveImagePlus:
 
     def save_image_plus(self, images, custom_path, filename_prefix, timestamp, format, quality,
                            meta_data, blind_watermark, preview, save_workflow_as_json,
-                           prompt=None, extra_pnginfo=None):
+                           caption, prompt=None, extra_pnginfo=None):
 
         now = datetime.datetime.now()
         custom_path = custom_path.replace("%date", now.strftime("%Y-%m-%d"))
@@ -93,7 +94,6 @@ class SaveImagePlus:
             else:
                 file = f'{filename}_{counter:05}'
 
-
             preview_filename = ""
             if custom_path != "":
                 if not os.path.exists(custom_path):
@@ -133,14 +133,24 @@ class SaveImagePlus:
 
             image_file_name = os.path.join(full_output_folder, f"{file}.{format}")
             json_file_name = os.path.join(full_output_folder, f"{file}.json")
+            caption_file_name = os.path.join(full_output_folder, f"{file}.txt")  # Added caption file name
 
             if format == "png":
-                img.save(image_file_name, pnginfo=metadata, compress_level= (100 - quality) // 10)
+                img.save(image_file_name, pnginfo=metadata, compress_level=(100 - quality) // 10)
             else:
                 if img.mode == "RGBA":
                     img = img.convert("RGB")
                 img.save(image_file_name, quality=quality)
             log(f"{NODE_NAME} -> Saving image to {image_file_name}")
+
+            # Save caption if provided
+            if caption.strip():
+                try:
+                    with open(caption_file_name, 'w', encoding='utf-8') as caption_file:
+                        caption_file.write(caption)
+                    log(f"{NODE_NAME} -> Saving caption to {caption_file_name}")
+                except Exception as e:
+                    log(f'Failed to save caption file due to: {e}', message_type="warning")
 
             if save_workflow_as_json:
                 try:
