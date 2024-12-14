@@ -4821,7 +4821,44 @@
         0.99,
         true
       ]
-    }
+    },
+    {
+      "id": 135,
+      "type": "RadialGradientNode",
+      "pos": [
+        -3245,
+        2860
+      ],
+      "size": {
+          "0": 315,
+          "1": 198
+      },
+      "flags": {},
+      "order": 0,
+      "mode": 0,
+      "inputs": [
+          {
+              "name": "image",
+              "type": "IMAGE",
+              "link": null
+          }
+      ],
+      "outputs": [
+          {
+              "name": "IMAGE",
+              "type": "IMAGE",
+              "links": null,
+              "shape": 3
+          }
+      ],
+      "properties": {
+          "Node name for S&R": "RadialGradientNode"
+      },
+      "widgets_values": [
+          1.0,         
+          3          
+      ]
+  }
   ],
   "links": [],
   "groups": [
